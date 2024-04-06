@@ -3,94 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="/_vercel/insights/script.js"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
     />
-    <title>Vercel HTML Starter</title>
+    <title>Bullish Prototype</title>
     <meta
       name="description"
-      content="High-performance HTML based website template."
+      content="A place to prototype all the bullish things."
     />
   </head>
   <body>
-    <h1>Vercel HTML Starter</h1>
+
+    <h1>Bullish Prototype</h1>
     <p>
-      This template is a simple, but powerful single
-      <code>index.html</code> file deployed to
-      <a href="https://vercel.com">Vercel</a>. When your site is deployed, all
-      static assets (like HTML, JavaScript, CSS, images, and more) are deployed
-      globally to every
-      <a href="https://vercel.com/docs/concepts/edge-network/overview"
-        >Vercel Edge Network</a
-      >
-      region.
+      Bullish AF
     </p>
-    <h2>Simple, privacy-friendly analytics</h2>
+
+    <h2>Bitcoin Connect</h2>
     <p>
-      Want to understand your visitor traffic? Vercel Analytics gives you
-      first-party, privacy-friendly traffic analytics for your HTML site. This
-      template is already configured using the following script:
+      Connecting lightning wallets to your webapp has never been easier. Enable WebLN in all browsers with a single button.
     </p>
-    <pre><code>&lt;script defer src="/_vercel/insights/script.js"&gt;&lt;/script&gt;</code></pre>
+
+    <script type="module">
+      import {launchModal} from 'https://esm.sh/@getalby/bitcoin-connect@3.2.2'; // jsdelivr.net, skypack.dev also work
+    
+      // use Bitcoin connect API normally...
+      launchModal();
+    
+      // or if you just want access to the web components:
+      import 'https://esm.sh/@getalby/bitcoin-connect@3.2.2';
+    </script>
+    
+    <!-- Bitcoin Connect components are now available -->
+    <bc-button></bc-button>
+
+    <h2>Twenty Uno Payment Widgets</h2>
     <p>
-      Learn more about
-      <a href="https://vercel.com/analytics">Vercel Analytics</a>.
+      Payment Widgets aims to be the easiest way to integrate bitcoin payments into your website.
     </p>
-    <h2>Integrated with git</h2>
+    
+    <lightning-widget 
+      name="BULLISH" 
+      accent="#ff9900" 
+      to="bullish@getalby.com" 
+      image="https://thebullishbitcoiner.files.wordpress.com/2023/08/img_5490.png" 
+      amounts="100,1000,2100"
+    />
+    <script src="https://embed.twentyuno.net/js/app.js"></script>
+    
     <p>
-      Deploying updates to your site is as simple as
-      <code>git push</code> thanks to Vercel's advanced
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-      Support for GitHub, GitLab, Bitbucket is zero-configuration, and with the
-      flexible Vercel CLI and API, you can integrate with any tool possible.
+      Learn more <a href="https://widgets.twentyuno.net/">here</a>.
     </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-    </p>
-    <h2>Fast <code>gzip</code> compression</h2>
-    <p>
-      To help ensure the smallest possible file sizes for your static assets,
-      the Vercel Edge Network compresses files by default using
-      <code>gzip</code>. You can also optionally use
-      <code>brotli</code> compressesion if you prefer.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/edge-network/compression"
-        >compression</a
-      >.
-    </p>
-    <h2>Advanced routing configuration</h2>
-    <p>
-      Vercel gives you a variety of ways to configure the routing of your
-      website. For example, adding redirects, rewrites, or headers to your page.
-      While you can use <code>vercel.json</code> to define these through JSON,
-      you can also express your routing configuration as code using
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-    <p>
-      Middleware runs before the
-      <a href="https://vercel.com/docs/concepts/edge-network/caching"
-        >Vercel Edge Network Cache</a
-      >, so you can configure routing exactly as your application needs. For
-      example, this template uses <code>middleware.js</code> defined in the root
-      of the repository to add additional security headers to the site:
-    </p>
-    <pre><code>referrer-policy: origin-when-cross-origin
-strict-transport-security: max-age=31536000; includeSubDomains; preload
-x-content-type-options: nosniff
-x-dns-prefetch-control: on
-x-frame-options: DENY</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
+
+
+
   </body>
 </html>
