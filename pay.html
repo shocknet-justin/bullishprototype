@@ -36,10 +36,11 @@
 
         <!-- Main component for a primary marketing message or call to action -->
         <div class="jumbotron">
-            <h1>BullishPay</h1>
-            <p>Paste BOLT11 invoice below</p>
 
-            <textarea id="invoice" cols="40" rows="5"></textarea>
+            <h1>BullishPay</h1>
+            <button type="button" class="btn btn-primary" id="paste-button">Paste</button> BOLT11 invoice below <br><br>
+
+            <textarea id="invoice" style="width: 100%" rows="5"></textarea>
             <br><br>
 
             <script type="module">
@@ -47,6 +48,7 @@
             </script>
 
             <bc-pay-button onclick="payButtonClicked()"></bc-pay-button>
+            
         </div>
 
     </div> <!-- /container -->
@@ -60,6 +62,18 @@
     <script src="bootstrap-3.4.1/js/bootstrap.min.js"></script>
 
     <script>
+
+        const pasteButton = document.querySelector('#paste-button');
+
+        pasteButton.addEventListener('click', async () => {
+        try {
+            const text = await navigator.clipboard.readText()
+            document.querySelector('textarea').value += text;
+            console.log('Text pasted.');
+        } catch (error) {
+            console.log('Failed to read clipboard');
+        }
+        });
 
         function payButtonClicked(){
             var invoice = document.getElementById("invoice").value;
