@@ -38,9 +38,9 @@
         <div class="jumbotron">
 
             <h1>BullishPay</h1>
-            <button type="button" class="btn btn-primary" id="paste-button" onclick="pasteButtonClicked()">Paste</button> BOLT11 invoice below <br><br>
+            <button type="button" class="btn btn-primary" onclick="pasteButtonClicked()">Paste</button> BOLT11 invoice below <br><br>
 
-            <textarea id="invoice" style="width: 100%" rows="5"></textarea>
+            <textarea id="invoice" style="width: 100%" rows="7"></textarea>
             <br><br>
 
             <script type="module">
@@ -63,18 +63,6 @@
 
     <script>
 
-        // const pasteButton = document.querySelector('#paste-button');
-
-        // pasteButton.addEventListener('click', async () => {
-        // try {
-        //     const text = await navigator.clipboard.readText()
-        //     document.querySelector('textarea').value += text;
-        //     console.log('Text pasted.');
-        // } catch (error) {
-        //     console.log('Failed to read clipboard');
-        // }
-        // });
-
         function payButtonClicked(){
             var invoice = document.getElementById("invoice").value;
             const button = document.querySelector("bc-pay-button");
@@ -82,14 +70,13 @@
         }
 
         function pasteButtonClicked() {
-      navigator.clipboard.readText()
-        .then(text => {
-          document.getElementById('invoice').value = text;
-        })
-        .catch(err => {
-          console.error('Failed to read clipboard contents: ', err);
-        });
-    }
+            navigator.clipboard.readText().then(text => {
+                document.getElementById('invoice').value = text;
+            })
+            .catch(err => {
+                console.error('Failed to read clipboard contents: ', err);
+            });
+        }
 
     </script>
 
