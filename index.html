@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="bootstrap-5.3.3/css/bootstrap.min.css" />
   <title>Bullish Prototype</title>
-  <meta name="description" content="A place to experiment with all the bullish things." />
-  <meta name="color-scheme" content="light dark">
-
-  <style>
-    html {
-        --bc-color-brand: #ff9900; /* Only 6-digit hex and rgb formats are supported! */
-    }
-  </style>
-
 </head>
 
 <body>
@@ -28,9 +19,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="pay.html">Pay</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+                    <li class="nav-item"><a class="nav-link" href="wallet.html">Wallet</a></li>
                 </ul>
             </div>
         </div>
@@ -38,33 +30,12 @@
 
     <br>
 
-    <h4>Bitcoin Connect</h4>
-    <p>Connecting lightning wallets to your webapp has never been easier. Enable WebLN in all browsers with a single
-      button.</p>
-
-    <script type="module">
-      import { launchModal } from 'https://esm.sh/@getalby/bitcoin-connect@3.2.2'; // jsdelivr.net, skypack.dev also work
-
-      // use Bitcoin connect API normally...
-      //launchModal();
-
-      // or if you just want access to the web components:
-      import 'https://esm.sh/@getalby/bitcoin-connect@3.2.2';
-    </script>
-
-    <!-- Bitcoin Connect components are now available -->
-    <bc-button></bc-button>
-
-    <br>
-
-    <h4>Twenty Uno Payment Widgets</h4>
-    <p>Payment Widgets aims to be the easiest way to integrate bitcoin payments into your website.</p>
-
-    <lightning-widget name="BULLISH" accent="#ff9900" to="bullish@getalby.com"
-      image="https://thebullishbitcoiner.files.wordpress.com/2023/08/img_5490.png"
-      background-image="https://cdn.nostr.build/i/c0f8a688816f367f990236e23feac6564a136c557e0175160a5129bd88ad7808.gif"
-      amounts="100,1000,2100" />
-    <script src="https://embed.twentyuno.net/js/app.js"></script>
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">A place to experiment with all the BULLISH things.</h1>
+        <small>v0.0.12</small>
+      </div>
+    </div>
 
   </div> <!-- /container -->
 
