@@ -1,10 +1,10 @@
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="bootstrap-3.4.1/css/bootstrap.css" />
-    <title>Bullish Prototype</title>
+    <link rel="stylesheet" href="bootstrap-5.3.3/css/bootstrap.min.css" />
+    <title>BullishPay</title>
     <meta name="description" content="A bullish place to pay invoices." />
 
     <style>
@@ -19,33 +19,29 @@
 
     <div class="container">
 
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                        aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Bullish Prototype</a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li class="active"><a href="pay.html">Pay</a></li>
-                        <li><a href="about.html">About</a></li>
+                <a class="navbar-brand" href="index.html">Bullish Prototype</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="pay.html">Pay</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
                     </ul>
-                </div><!--/.nav-collapse -->
-            </div><!--/.container-fluid -->
+                </div>
+            </div>
         </nav>
+
+        <br>
 
         <!-- Main component for a primary marketing message or call to action -->
         <div class="jumbotron">
 
             <h1>BullishPay</h1>
-            <button type="button" class="btn btn-default" onclick="pasteButtonClicked()">Paste</button> BOLT11 invoice below <br><br>
+            <button type="button" class="btn btn-outline-light" onclick="pasteButtonClicked()">Paste</button>   BOLT11 invoice below <br><br>
 
             <textarea id="invoice" style="width: 100%" rows="8"></textarea>
             <br><br>
@@ -66,7 +62,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
         integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
         crossorigin="anonymous"></script>
-    <script src="bootstrap-3.4.1/js/bootstrap.min.js"></script>
+    <script src="bootstrap-5.3.3/js/bootstrap.min.js"></script>
 
     <script>
 
