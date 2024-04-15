@@ -39,6 +39,7 @@
         <br>
 
         <h1>Optimal Character Recognition (OCR)</h1>
+        <button id="flipButton">Flip Camera</button>
         <button id="captureButton">Capture Image and Extract Text</button><br>
         <textarea id="extractedTextArea" style="width: 100%" rows="10"></textarea><br>
         <video id="video" width="400" height="300" autoplay></video>
@@ -76,57 +77,54 @@
             }
         }
 
-        // Function to capture image from camera and extract text
-        async function captureImageAndExtractText() {
-            try {
-                // Access the user's camera
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                
-                // Create a video element and set the stream as its source
-                const video = document.getElementById('video');
-                video.srcObject = stream;
-                
-                // Wait for the video to load metadata (including dimensions)
-                await new Promise(resolve => {
-                video.onloadedmetadata = () => {
-                    // Play the video
-                    video.play();
-                    resolve();
-                };
-                });
-                
-                // Create a canvas element to draw the video frame
-                const canvas = document.getElementById('canvas');
-                const context = canvas.getContext('2d');
-                canvas.style.display = 'block'; // Show the canvas
-                
-                // Draw the current video frame onto the canvas
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                
-                // Stop the video stream
-                stream.getVideoTracks()[0].stop();
-                
-                // Extract image data from canvas
-                const imageData = canvas.toDataURL('image/jpeg');
-                
-                // Extract text from the captured image
-                const extractedText = await extractTextFromImage(imageData);
-                
-                // Output the extracted text
-                console.log('Extracted text:', extractedText);
-                
-                // Update the value of the textarea with the extracted text
-                document.getElementById('extractedTextArea').value = extractedText;
-            } catch (error) {
-                console.error('Error capturing image and extracting text:', error);
-            }
+        let isFrontCamera = true; // Track whether the front camera is active
+
+        // Function to switch between front and back cameras
+        function toggleCamera() {
+        isFrontCamera = !isFrontCamera;
+        startCamera();
         }
 
-        // Add event listener to the button click event
-        document.getElementById('captureButton').addEventListener('click', () => {
-            captureImageAndExtractText();
-        });
+        // Function to start the camera with the selected camera
+        async function startCamera() {
+        try {
+            const video = document.getElementById('video');
+            const constraints = { video: { facingMode: isFrontCamera ? 'user' : 'environment' } };
+            const stream = await navigator.mediaDevices.getUserMedia(constraints);
+            video.srcObject = stream;
+            await video.play();
+        } catch (error) {
+            console.error('Error starting camera:', error);
+        }
+        }
 
+        // Function to capture image from camera and extract text
+        async function captureImageAndExtractText() {
+        try {
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            canvas.style.display = 'block';
+
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imageData = canvas.toDataURL('image/jpeg');
+            const extractedText = await extractTextFromImage(imageData);
+
+            console.log('Extracted text:', extractedText);
+
+            document.getElementById('extractedTextArea').value = extractedText;
+        } catch (error) {
+            console.error('Error capturing image and extracting text:', error);
+        }
+        }
+
+        // Add event listeners
+        document.getElementById('flipButton').addEventListener('click', toggleCamera);
+        document.getElementById('captureButton').addEventListener('click', captureImageAndExtractText);
+
+        // Start the camera when the page loads
+        startCamera();
 
     </script>
 
