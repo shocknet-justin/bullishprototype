@@ -39,11 +39,10 @@
         <br>
 
         <h1>Optimal Character Recognition (OCR)</h1>
-        <button type="button" class="btn btn-outline-light" onclick="lfgButtonClicked()">LFG</button>
-        
-        <br><br>
-
-        <textarea id="ocrText" style="width: 100%" rows="8"></textarea>
+        <button id="captureButton">Capture Image and Extract Text</button><br>
+        <textarea id="extractedTextArea" style="width: 100%" rows="10"></textarea><br>
+        <video id="video" width="400" height="300" autoplay></video>
+        <canvas id="canvas" width="400" height="300" style="display: none;"></canvas>
 
     </div> <!-- /container -->
 
@@ -54,11 +53,27 @@
         integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
         crossorigin="anonymous"></script>
     <script src="bootstrap-5.3.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js"></script>
 
     <script>
 
-        function lfgButtonClicked() {
-            captureImageAndExtractText();
+        // Function to extract text from an image
+        async function extractTextFromImage(imageUrl) {
+            try {
+                // Recognize text from image URL
+                const { data: { text } } = await Tesseract.recognize(
+                imageUrl,
+                'eng', // Language code (e.g., 'eng' for English)
+                { logger: m => console.log(m) } // Optional logger
+                );
+                
+                // Output the extracted text
+                console.log('Extracted text:', text);
+                return text;
+            } catch (error) {
+                console.error('Error extracting text:', error);
+                return null;
+            }
         }
 
         // Function to capture image from camera and extract text
@@ -68,18 +83,22 @@
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 
                 // Create a video element and set the stream as its source
-                const video = document.createElement('video');
+                const video = document.getElementById('video');
                 video.srcObject = stream;
-                video.play();
                 
                 // Wait for the video to load metadata (including dimensions)
-                await new Promise(resolve => video.onloadedmetadata = resolve);
+                await new Promise(resolve => {
+                video.onloadedmetadata = () => {
+                    // Play the video
+                    video.play();
+                    resolve();
+                };
+                });
                 
                 // Create a canvas element to draw the video frame
-                const canvas = document.createElement('canvas');
+                const canvas = document.getElementById('canvas');
                 const context = canvas.getContext('2d');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
+                canvas.style.display = 'block'; // Show the canvas
                 
                 // Draw the current video frame onto the canvas
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -95,14 +114,19 @@
                 
                 // Output the extracted text
                 console.log('Extracted text:', extractedText);
-
+                
                 // Update the value of the textarea with the extracted text
                 document.getElementById('extractedTextArea').value = extractedText;
             } catch (error) {
                 console.error('Error capturing image and extracting text:', error);
-                return null;
             }
         }
+
+        // Add event listener to the button click event
+        document.getElementById('captureButton').addEventListener('click', () => {
+            captureImageAndExtractText();
+        });
+
 
     </script>
 
