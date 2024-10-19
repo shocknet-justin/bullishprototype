@@ -16,7 +16,7 @@
 
 <body>
 
-    <div class="container">
+    <div class="container-fluid">
 
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
@@ -100,8 +100,8 @@
       /> -->
         </div>
 
-        <div class="flex flex-col gap-2">
-            <span>Payment will succeed when poll count reaches 5</span>
+        <div class="flex flex-col gap-2 w-100">
+            <textarea id="invoice" class="w-100" rows="5" readonly></textarea>
             <span id="poll-count">Poll count: 0</span>
             <span id="paid">Paid: false</span>
             <button id="toggle" class="bg-[#ff5000] p-2 text-white rounded-lg" onclick="toggle()">Stop</button>
@@ -131,6 +131,22 @@
         }
     }
 
+    async function  checkPayment() {
+        const paid = await lightningInvoice.verifyPayment();
+
+    }
+
+     const checkPaymentInterval = setInterval(async () => {
+      const paid = await lightningInvoice.verifyPayment();
+      if (paid && lightningInvoice.preimage) {
+        console.log(`Preimage: ${lightningInvoice.preimage}`);
+        preimage.value = lightningInvoice.preimage;
+        clearInterval(checkPaymentInterval);
+      }
+    }, 3000);
+
+
+
     async function reset() {
         pollCount = 0;
         paid = false;
@@ -149,14 +165,17 @@
         clearTimeout(interval);
     }
 
-    async function getNewInvoice() {
-        callbackURL = 'https://getalby.com/.well-known/lnurlp/bullish/callback';
-        amount = 21 * 1000; //Convert to millisats
+    async function getNewInvoice(sats = 21) {
+        const callbackURL = 'https://getalby.com/lnurlp/bullish/callback';
+        millisats = sats * 1000; //Convert to millisats
 
         //Wait to get invoice using callback URL
         let invoice;
         try {
-            invoice = await fetchInvoiceFromCallback(callbackURL, amount);
+            invoice = await fetchInvoiceFromCallback(callbackURL, millisats);
+
+            var textarea = document.getElementById('invoice');
+            textarea.value = invoice;
 
             const qr = document.getElementById('qr');
             qr.setAttribute('lightning', invoice);
@@ -166,51 +185,33 @@
         }
     }
 
-    async function fetchInvoiceFromCallback(callbackURL, amount, timeout = 5000) {
-        const url = new URL(callbackURL);
-        const params = {
-            amount: amount,
-        };
-        url.search = new URLSearchParams(params).toString();
+    async function fetchInvoiceFromCallback(callbackURL, amount) {
+    const url = new URL(callbackURL);
+    const params = {
+        amount: amount,
+    };
+    url.search = new URLSearchParams(params).toString();
 
-        // Use AbortController to handle the timeout
-        const controller = new AbortController();
-        const signal = controller.signal;
+    try {
+        console.log(`Fetching invoice from ${url}`);
+        const response = await fetch(url);
 
-        // Set a timeout to abort the fetch request
-        const timeoutID = setTimeout(() => {
-            console.warn(`Aborting request to ${url} after ${timeout} ms`);
-            controller.abort();
-        }, timeout);
-
-        try {
-            console.log(`Fetching invoice from ${url}`);
-            const response = await fetch(url, { signal });
-
-            // Clear timeout once response is received
-            clearTimeout(timeoutID);
-
-            if (!response.ok) {
-                throw new Error(`Failed to fetch invoice. HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            return data.pr;
-        } catch (error) {
-            // Check if the error is due to a timeout
-            if (error.name === 'AbortError') {
-                console.error(`Request to ${url} timed out after ${timeout} ms`);
-                throw new Error(`Failed to fetch invoice. Request timed out.`);
-            } else {
-                console.error('Error fetching invoice:', error);
-                throw new Error(`Failed to fetch invoice. Error: ${error.message}`);
-            }
+        if (!response.ok) {
+            throw new Error(`Failed to fetch invoice. HTTP error! status: ${response.status}`);
         }
+
+        const data = await response.json();
+        return data.pr;
+    } catch (error) {
+        console.error('Error fetching invoice:', error);
+        throw new Error(`Failed to fetch invoice. Error: ${error.message}`);
     }
+}
+
 
     document.getElementById('qr').callback = callbackExample;
 
-    window.onload = getNewInvoice;
+    window.onload = getNewInvoice();
 
 </script>
 
