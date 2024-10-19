@@ -1,0 +1,156 @@
+<html lang="en" data-bs-theme="dark">
+
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="bootstrap-5.3.3/css/bootstrap.min.css" />
+    <title>Bitcoin QR</title>
+    <script type="module" src="https://unpkg.com/bitcoin-qr@1.1.4/dist/bitcoin-qr/bitcoin-qr.esm.js"></script>
+
+    <script>
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">Bullish Prototype</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="twentyuno.html">TwentyUno</a></li>
+                        <li class="nav-item"><a class="nav-link" href="bitcoin-connect.html">Bitcoin Connect</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="bitcoin-qr.html">Bitcoin QR</a></li>
+                        <li class="nav-item"><a class="nav-link" href="ocr.html">OCR</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <br>
+
+        <h3>&lt;bitcoin-qr /&gt;</h3>
+        <p>"A zero-dependency, zero-framework QR code web component for Bitcoin on-chain, Lightning, and unified BIP-21
+            payments."</p>
+            <p>View on <a href="https://github.com/thebrandonlucas/bitcoin-qr">GitHub</a></p>
+
+        <div class="flex flex-col items-center">
+            <!-- Voltage example -->
+            <!-- <bitcoin-qr
+        id="qr"
+        width="300"
+        height="300"
+        lightning="LNBC10U1P3PJ257PP5YZTKWJCZ5FTL5LAXKAV23ZMZEKAW37ZK6KMV80PK4XAEV5QHTZ7QDPDWD3XGER9WD5KWM36YPRX7U3QD36KUCMGYP282ETNV3SHJCQZPGXQYZ5VQSP5USYC4LK9CHSFP53KVCNVQ456GANH60D89REYKDNGSMTJ6YW3NHVQ9QYYSSQJCEWM5CJWZ4A6RFJX77C490YCED6PEMK0UPKXHY89CMM7SCT66K8GNEANWYKZGDRWRFJE69H9U5U0W57RRCSYSAS7GADWMZXC8C6T0SPJAZUP6"
+        parameters="amount=0.00001&label=sbddesign%3A%20For%20lunch%20Tuesday&message=For%20lunch%20Tuesday"
+        image="./assets/bitcoin.svg"
+        is-polling="true"
+        poll-interval="1000"
+        type="svg"
+        corners-square-type="extra-rounded"
+        dots-type="classy-rounded"
+        debug="true"
+      /> -->
+            <bitcoin-qr id="qr" width="300" height="300"
+                lightning="lnbc210n1pn3x858pp5pk3yd7ek92dvv02elrzsx654876e57a9fs60aqxvpchjqk2hqp2sdqvgf25cnzf2dyqcqzzsxqrrs0sp5mxz2fm4tsqf3r6rlqejjmmlgaqae0gn8fwn8txgrppm55f7sqc5s9qxpqysgqdt9e3edvsrc9d2mgjelugescyezcq2ehx9he4q2hee5f5yskx72njf68mfxrm8nhhf77n2n7wqe5tvn6tnx99peu2fyv2lkah9sgpaqplvfmrh"
+                is-polling="false" poll-interval="1000" image="./images/thebullishbitcoiner-1.0.png" type="svg"
+                corners-square-color="#000" corners-dot-color="#000" corners-square-type="extra-rounded"
+                dots-type="classy-rounded" dots-color="#000" debug="true" poll-callback={callbackExample} />
+            <!-- Bitcoin example -->
+            <!-- <bitcoin-qr
+        id="qr"
+        width="300"
+        height="300"
+        bitcoin="BC1QYLH3U67J673H6Y6ALV70M0PL2YZ53TZHVXGG7U"
+        parameters="?amount=0.00001&label=sbddesign%3A%20For%20lunch%20Tuesday&message=For%20lunch%20Tuesday"
+        image="./assets/bitcoin.svg"
+        type="svg"
+        corners-dot-color="#d67b0c"
+        corners-dot-type="rounded"
+        corners-square-color="#dd7b02"
+        corners-square-type="extra-rounded"
+        dots-type="dots"
+        dots-color="#F7931A"
+      /> -->
+            <!-- Payjoin example -->
+            <!-- <bitcoin-qr
+        id="qr"
+        width="300"
+        height="300"
+        bitcoin="BCRT1QCJ4X75DUNY4X5NAWLM3CR8MALM9YAUYWWEWKWL"
+        parameters="?amount=0.00010&pj=https://localhost:3010"
+        image="./assets/payjoin.svg"
+        type="svg"
+        corners-dot-color="#ed2877"
+        corners-dot-type="dot"
+        corners-square-color="#ef5693"
+        corners-square-type="rounded"
+        dots-type="rounded"
+        dots-color="#ed71a3"
+      /> -->
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <span>Payment will succeed when poll count reaches 5</span>
+            <span id="poll-count">Poll count: 0</span>
+            <span id="paid">Paid: false</span>
+            <button id="toggle" class="bg-[#ff5000] p-2 text-white rounded-lg" onclick="toggle()">Stop</button>
+            <button id="reset" class="bg-[#ff5000] p-2 text-white rounded-lg" onclick="reset()">Reset</button>
+        </div>
+
+    </div>
+
+</body>
+
+<script>
+
+    let pollCount = 0;
+    let paid = false;
+    let interval;
+
+    async function callbackExample() {
+        pollCount += 1;
+        document.getElementById('poll-count').innerText = `Poll count: ${pollCount}`;
+        if (pollCount >= 5) {
+            isPolling = false;
+            paid = true;
+            alert('Paid!');
+            const qr = document.getElementById('qr');
+            qr.setAttribute('is-polling', false);
+            document.getElementById('paid').innerText = `Paid: ${paid}`;
+        }
+    }
+
+    async function reset() {
+        pollCount = 0;
+        paid = false;
+        isPolling = true;
+        document.getElementById('toggle').innerText = 'Stop';
+        document.getElementById('poll-count').innerText = `Poll count: ${pollCount}`;
+        document.getElementById('paid').innerText = `Paid: ${paid}`;
+    }
+
+    async function toggle() {
+        const qr = document.getElementById('qr');
+        const isPolling = qr.getAttribute('is-polling') === 'true';
+        qr.setAttribute('is-polling', !isPolling);
+        const toggle = document.getElementById('toggle');
+        toggle.innerText === 'Stop' ? (toggle.innerText = 'Start') : (toggle.innerText = 'Stop');
+        clearTimeout(interval);
+    }
+
+    document.getElementById('qr').callback = callbackExample;
+
+</script>
+
+</html>

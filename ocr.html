@@ -9,7 +9,8 @@
 
     <style>
         html {
-            --bc-color-brand: #ff9900; /* Only 6-digit hex and rgb formats are supported! */
+            --bc-color-brand: #ff9900;
+            /* Only 6-digit hex and rgb formats are supported! */
         }
     </style>
 
@@ -22,15 +23,18 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.html">Bullish Prototype</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="pay.html">Pay</a></li>
-                        <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
-                        <li class="nav-item"><a class="nav-link" href="wallet.html">Wallet</a></li>
+                        <li class="nav-item"><a class="nav-link" href="twentyuno.html">TwentyUno</a></li>
+                        <li class="nav-item"><a class="nav-link" href="bitcoin-connect.html">Bitcoin Connect</a></li>
+                        <li class="nav-item"><a class="nav-link" href="bitcoin-qr.html">Bitcoin QR</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="ocr.html">OCR</a></li>
                     </ul>
                 </div>
             </div>
@@ -38,7 +42,7 @@
 
         <br>
 
-        <h1>Optimal Character Recognition (OCR)</h1>
+        <h3>Optimal Character Recognition (OCR)</h3>
         <button id="flipButton">Flip Camera</button>
         <button id="captureButton">Capture Image and Extract Text</button><br>
         <textarea id="extractedTextArea" style="width: 100%" rows="10"></textarea><br>
@@ -63,11 +67,11 @@
             try {
                 // Recognize text from image URL
                 const { data: { text } } = await Tesseract.recognize(
-                imageUrl,
-                'eng', // Language code (e.g., 'eng' for English)
-                { logger: m => console.log(m) } // Optional logger
+                    imageUrl,
+                    'eng', // Language code (e.g., 'eng' for English)
+                    { logger: m => console.log(m) } // Optional logger
                 );
-                
+
                 // Output the extracted text
                 console.log('Extracted text:', text);
                 return text;
@@ -81,42 +85,42 @@
 
         // Function to switch between front and back cameras
         function toggleCamera() {
-        isFrontCamera = !isFrontCamera;
-        startCamera();
+            isFrontCamera = !isFrontCamera;
+            startCamera();
         }
 
         // Function to start the camera with the selected camera
         async function startCamera() {
-        try {
-            const video = document.getElementById('video');
-            const constraints = { video: { facingMode: isFrontCamera ? 'user' : 'environment' } };
-            const stream = await navigator.mediaDevices.getUserMedia(constraints);
-            video.srcObject = stream;
-            await video.play();
-        } catch (error) {
-            console.error('Error starting camera:', error);
-        }
+            try {
+                const video = document.getElementById('video');
+                const constraints = { video: { facingMode: isFrontCamera ? 'user' : 'environment' } };
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = stream;
+                await video.play();
+            } catch (error) {
+                console.error('Error starting camera:', error);
+            }
         }
 
         // Function to capture image from camera and extract text
         async function captureImageAndExtractText() {
-        try {
-            const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
-            const context = canvas.getContext('2d');
-            canvas.style.display = 'block';
+            try {
+                const video = document.getElementById('video');
+                const canvas = document.getElementById('canvas');
+                const context = canvas.getContext('2d');
+                canvas.style.display = 'block';
 
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            const imageData = canvas.toDataURL('image/jpeg');
-            const extractedText = await extractTextFromImage(imageData);
+                const imageData = canvas.toDataURL('image/jpeg');
+                const extractedText = await extractTextFromImage(imageData);
 
-            console.log('Extracted text:', extractedText);
+                console.log('Extracted text:', extractedText);
 
-            document.getElementById('extractedTextArea').value = extractedText;
-        } catch (error) {
-            console.error('Error capturing image and extracting text:', error);
-        }
+                document.getElementById('extractedTextArea').value = extractedText;
+            } catch (error) {
+                console.error('Error capturing image and extracting text:', error);
+            }
         }
 
         // Add event listeners
