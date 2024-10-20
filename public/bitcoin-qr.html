@@ -118,6 +118,8 @@
 
     // Function to copy text from the textarea to the clipboard
     document.getElementById('invoice').addEventListener('click', function () {
+        simulateLightning();
+
         // Select the text in the textarea
         this.select();
         this.setSelectionRange(0, 99999); // For mobile devices
@@ -133,9 +135,9 @@
     });
 
     const lightningImages = [
-            '/images/lightning.png', // Replace with your image paths
-            '/images/lightning2.png',
-            '/images/lightning3.png',
+            'images/lightning1.png', // Replace with your image paths
+            'images/lightning2.png',
+            'images/lightning3.png',
             // Add more images as needed
         ];
 
@@ -168,7 +170,7 @@
 
     document.getElementById('qr').callback = checkPayment;
 
-    window.onload = getNewInvoice();
+    //window.onload = getNewInvoice();
 
 </script>
 
