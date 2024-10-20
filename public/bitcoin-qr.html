@@ -7,6 +7,27 @@
     <link rel="stylesheet" href="bootstrap-5.3.3/css/bootstrap.min.css" />
     <title>Bitcoin QR</title>
     <script type="module" src="https://unpkg.com/bitcoin-qr@1.1.4/dist/bitcoin-qr/bitcoin-qr.esm.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbar').innerHTML = data;
+                    setActiveLink('Bitcoin QR');
+                });
+
+            function setActiveLink(activeText) {
+                const navItems = document.querySelectorAll('nav ul li a'); // Select <a> elements
+                navItems.forEach(item => {
+                    if (item.textContent.trim() === activeText) {
+                        item.classList.add('active'); // Add active class to <a>
+                    } else {
+                        item.classList.remove('active'); // Remove active class from others
+                    }
+                });
+            }
+        });
+    </script>
     <style>
         body {
             margin: 0;
@@ -42,25 +63,7 @@
 
     <div class="container-fluid">
 
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="index.html">Bullish Prototype</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="twentyuno.html">TwentyUno</a></li>
-                        <li class="nav-item"><a class="nav-link" href="bitcoin-connect.html">Bitcoin Connect</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="bitcoin-qr.html">Bitcoin QR</a></li>
-                        <li class="nav-item"><a class="nav-link" href="ocr.html">OCR</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <div id="navbar"></div>
 
         <br>
 
@@ -147,13 +150,13 @@
     });
 
     const lightningImages = [
-        'images/lightning1.png', 
+        'images/lightning1.png',
         'images/lightning2.png',
         'images/lightning3.png',
         'images/lightning4.png',
         'images/lightning5.png',
         'images/lightning6.png',
-        'images/lightning7.png', 
+        'images/lightning7.png',
         'images/lightning8.png',
     ];
 
