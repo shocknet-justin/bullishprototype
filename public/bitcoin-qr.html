@@ -95,23 +95,27 @@
     import { LightningAddress } from "https://esm.sh/@getalby/lightning-tools@5.0.0"; // jsdelivr.net, skypack.dev also work
 
     let lightningInvoice;
+    let paid;
 
     async function checkPayment() {
-        const paid = await lightningInvoice.verifyPayment();
-        if (paid && lightningInvoice.preimage) {
-            const qr = document.getElementById('qr');
-            qr.setAttribute('is-polling', false);
+        if (!paid) {
+            paid = await lightningInvoice.verifyPayment();
+            if (paid && lightningInvoice.preimage) {
+                const qr = document.getElementById('qr');
+                qr.setAttribute('is-polling', false);
 
-            simulateLightning();
+                simulateLightning();
 
-            console.log(`Preimage: ${lightningInvoice.preimage}`);
-            document.getElementById('paid').innerText = `Paid: YES (refresh to get another invoice)`;
+                console.log(`Preimage: ${lightningInvoice.preimage}`);
+                document.getElementById('paid').innerText = `Paid: YES (refresh to get another invoice)`;
+            }
         }
     }
 
     async function getNewInvoice(sats = 21) {
         try {
             const ln = new LightningAddress('bullish@getalby.com');
+            //const ln = new LightningAddress('thebullishbitcoiner@stacker.news');
             await ln.fetch();
             lightningInvoice = await ln.requestInvoice({ satoshi: sats });
 
