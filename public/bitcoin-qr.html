@@ -10,10 +10,18 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             fetch('navbar.html')
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.text();
+                })
                 .then(data => {
                     document.getElementById('navbar').innerHTML = data;
                     setActiveLink('Bitcoin QR');
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
                 });
 
             function setActiveLink(activeText) {
@@ -75,9 +83,9 @@
         <div class="flex flex-col items-center">
 
             <bitcoin-qr id="qr" width="360" height="360" lightning="lnbc..." is-polling="false" poll-interval="3000"
-                image="./images/thebullishbitcoiner.png" image-hide-background-dots="false" type="svg" corners-square-color="#000"
-                corners-dot-color="#ff9900" corners-square-type="square" dots-type="square" dots-color="#000"
-                debug="true" />
+                image="./images/thebullishbitcoiner.png" image-hide-background-dots="false" type="svg"
+                corners-square-color="#000" corners-dot-color="#ff9900" corners-square-type="square" dots-type="square"
+                dots-color="#000" debug="true" />
 
         </div>
 
@@ -201,5 +209,13 @@
     window.onload = getNewInvoice();
 
 </script>
+
+  <!-- Bootstrap core JavaScript
+================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+    integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+    crossorigin="anonymous"></script>
+  <script src="bootstrap-5.3.3/js/bootstrap.min.js"></script>
 
 </html>
