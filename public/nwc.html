@@ -60,6 +60,9 @@
     const DONATION_CONNECTION_SECRET =
         "nostr+walletconnect://c8986738660e5e5ee92e21a51e1f2e5915ad7ee9e972f301fc670f8eb47e9bed?relay=wss://relay.getalby.com/v1&secret=4b1295fe100f412a44803def27d5eef6242443cbf1f2b55c557b141e46a736c7";
 
+    // const DONATION_CONNECTION_SECRET =
+    //     "nostr+walletconnect://b3eb19c72536ec0275a48f3ad0bc4e899374379e9683a2edee36efb760180892?relay=wss://relay.getalby.com/v1&secret=75ef32e4bb25aede352f275895d88e3a160436b811cbb5704174d4c16abafd8b";
+
     function timeAgo(timestamp) {
         const now = Date.now(); // Current time in milliseconds
         const seconds = Math.floor((now - timestamp * 1000) / 1000); // Convert timestamp to seconds
@@ -112,12 +115,12 @@
 
                 // Create the inner structure
                 transactionDiv.innerHTML = `
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">${transaction.amount} sats</h5>
-          <small>${timeAgo(transaction.timestamp)}</small>
-        </div>
-        <p class="mb-1">${transaction.description}</p>
-      `;
+                    <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">${transaction.amount} sats</h5>
+                    <small>${timeAgo(transaction.timestamp)}</small>
+                    </div>
+                    <p class="mb-1">${transaction.description}</p>
+                `;
 
                 // Append the transaction div to the list group
                 listGroup.appendChild(transactionDiv);
