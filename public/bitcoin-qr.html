@@ -1,7 +1,6 @@
 <html lang="en" data-bs-theme="dark">
 
 <head>
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="bootstrap-5.3.3/css/bootstrap.min.css" />
@@ -43,25 +42,15 @@
 
         .lightning {
             position: fixed;
-            /* Use fixed positioning to cover the viewport */
             top: -50;
-            /* Start at the top */
             left: 0;
-            /* Start at the left */
             width: 100vw;
-            /* Full viewport width */
             height: 100vh;
-            /* Full viewport height */
             pointer-events: none;
-            /* Prevent interaction */
             opacity: 0;
-            /* Start invisible */
             transition: opacity 0.2s ease-in-out;
-            /* Smooth fade-in/out */
             z-index: 1000;
-            /* Ensure lightning is on top */
             object-fit: cover;
-            /* Ensure the image covers the area */
         }
     </style>
 </head>
@@ -69,37 +58,37 @@
 <body>
 
     <div class="container-fluid">
-
         <div id="navbar"></div>
-
-        <br>
-
-        <h3 id="header">&lt;bitcoin-qr /&gt;</h3>
-        <p>"A zero-dependency, zero-framework QR code web component for Bitcoin on-chain, Lightning, and unified BIP-21
-            payments."</p>
-        <p>View on <a href="https://github.com/thebrandonlucas/bitcoin-qr">GitHub</a></p>
-
-        <div class="flex flex-col items-center">
-
-            <bitcoin-qr id="qr" width="360" height="360" lightning="lnbc..." is-polling="false" poll-interval="3000"
-                image="./images/thebullishbitcoiner.png" image-hide-background-dots="false" type="svg"
-                corners-square-color="#000" corners-dot-color="#ff9900" corners-square-type="square" dots-type="square"
-                dots-color="#000" debug="true" />
-
+    
+        <div class="p-2">
+            <h3 id="header">&lt;bitcoin-qr /&gt;</h3>
+            <p>"A zero-dependency, zero-framework QR code web component for Bitcoin on-chain, Lightning, and unified BIP-21 payments."</p>
+            <p>View on <a href="https://github.com/thebrandonlucas/bitcoin-qr">GitHub</a></p>
+    
+            <div class="flex flex-col items-center">
+                <bitcoin-qr id="qr" width="350" height="350" lightning="lnbc..." is-polling="false" poll-interval="3000"
+                    image="./images/thebullishbitcoiner.png" image-hide-background-dots="false" type="svg"
+                    corners-square-color="#000" corners-dot-color="#ff9900" corners-square-type="square" dots-type="square"
+                    dots-color="#000" debug="true" />
+            </div>
+    
+            <div class="d-flex align-items-center w-100 pt-3">
+                <input type="number" id="amount" class="form-control me-2 rounded-0" placeholder="Enter amount of sats"
+                    style="flex: 1;" />
+                <button id="create-invoice" class="btn rounded-0" style="background-color: #ff9900; color: #000;">Create invoice</button>
+            </div>
+    
+            <div class="flex flex-col gap-2 w-100 pt-3">
+                <textarea id="invoice" class="w-100 rounded-0" rows="7" readonly></textarea>
+                <span id="paid">Paid: NO</span>
+            </div>
         </div>
-
-        <div class="flex flex-col gap-2 w-100 pt-3">
-            <textarea id="invoice" class="w-100" rows="7" readonly></textarea>
-            <span id="paid">Paid: NO</span>
-        </div>
-
     </div>
-
+    
 </body>
 
 <script type="module">
-
-    import { LightningAddress } from "https://esm.sh/@getalby/lightning-tools@5.0.0"; // jsdelivr.net, skypack.dev also work
+    import { LightningAddress } from "https://esm.sh/@getalby/lightning-tools@5.1.2";
 
     let lightningInvoice;
     let paid;
@@ -114,19 +103,20 @@
                 simulateLightning();
 
                 console.log(`Preimage: ${lightningInvoice.preimage}`);
-                document.getElementById('paid').innerText = `Paid: YES (refresh to get another invoice)`;
+                document.getElementById('paid').innerText = `Paid: YESTR`;
             }
         }
     }
 
     async function getNewInvoice(sats = 21) {
         try {
-            const ln = new LightningAddress('bullish@getalby.com');
-            //const ln = new LightningAddress('thebullishbitcoiner@stacker.news');
+            const ln = new LightningAddress('thebullishbitcoiner@getalby.com');
             await ln.fetch();
-            lightningInvoice = await ln.requestInvoice({ satoshi: sats });
 
             var textarea = document.getElementById('invoice');
+            textarea.value = "Generating invoice...";
+
+            lightningInvoice = await ln.requestInvoice({ satoshi: sats });
             textarea.value = lightningInvoice.paymentRequest;
 
             const qr = document.getElementById('qr');
@@ -142,11 +132,9 @@
 
     // Function to copy text from the textarea to the clipboard
     document.getElementById('invoice').addEventListener('click', function () {
-        // Select the text in the textarea
         this.select();
         this.setSelectionRange(0, 99999); // For mobile devices
 
-        // Copy the text to the clipboard
         navigator.clipboard.writeText(this.value)
             .then(() => {
                 alert('Invoice copied to clipboard!');
@@ -176,45 +164,47 @@
         const lightningElements = []; // Array to hold lightning elements
 
         for (let i = 0; i < numberOfLightnings; i++) {
-            // Create a new image element
             const lightning = document.createElement('img');
             lightning.src = lightningImages[Math.floor(Math.random() * lightningImages.length)];
             lightning.className = 'lightning';
 
-            // Append to body
             document.body.appendChild(lightning);
-            lightningElements.push(lightning); // Store the lightning element
+            lightningElements.push(lightning);
 
-            // Trigger the lightning effect
             setTimeout(() => {
                 lightning.style.opacity = 1; // Fade in
-            }, 10); // Small delay to ensure the image is rendered
+            }, 10);
 
-            // Remove the lightning after a short duration
             setTimeout(() => {
                 lightning.style.opacity = 0; // Fade out
                 setTimeout(() => {
-                    document.body.removeChild(lightning); // Remove from DOM
-                }, 500); // Wait for fade-out transition
-            }, 500); // Duration of the lightning effect
+                    document.body.removeChild(lightning);
+                }, 500);
+            }, 500);
         }
 
-        // Optional: Shuffle the lightning elements for random order
         lightningElements.sort(() => Math.random() - 0.5);
     }
 
     document.getElementById('qr').callback = checkPayment;
 
-    window.onload = getNewInvoice();
+    // Add event listener for the "Create invoice" button
+    document.getElementById('create-invoice').addEventListener('click', function () {
+        const amountInput = document.getElementById('amount');
+        const sats = parseInt(amountInput.value, 10);
+        if (isNaN(sats) || sats <= 0) {
+            alert("Please enter a valid amount of sats.");
+            return;
+        }
+        getNewInvoice(sats);
+    });
 
 </script>
 
-  <!-- Bootstrap core JavaScript
-================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+<!-- Bootstrap core JavaScript -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
     integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
     crossorigin="anonymous"></script>
-  <script src="bootstrap-5.3.3/js/bootstrap.min.js"></script>
+<script src="bootstrap-5.3.3/js/bootstrap.min.js"></script>
 
 </html>
