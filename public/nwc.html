@@ -57,11 +57,8 @@
 
     import { nwc } from "https://esm.sh/@getalby/sdk@3.7.0";
 
-    const DONATION_CONNECTION_SECRET =
-        "nostr+walletconnect://c8986738660e5e5ee92e21a51e1f2e5915ad7ee9e972f301fc670f8eb47e9bed?relay=wss://relay.getalby.com/v1&secret=4b1295fe100f412a44803def27d5eef6242443cbf1f2b55c557b141e46a736c7";
-
-    // const DONATION_CONNECTION_SECRET =
-    //     "nostr+walletconnect://b3eb19c72536ec0275a48f3ad0bc4e899374379e9683a2edee36efb760180892?relay=wss://relay.getalby.com/v1&secret=75ef32e4bb25aede352f275895d88e3a160436b811cbb5704174d4c16abafd8b";
+    const NWC_CONNECTION_SECRET =
+        "nostr+walletconnect://5ab65d2fc016f245eebf5ff760ef7c15acd6d930079052e8813217b18d4c0cda?relay=wss://relay.getalby.com/v1&secret=86db39f1e6d97a5bad4ca827659523e784511eb6816bbf20a1b790b9a855b5f6&lud16=thebullishbitcoiner@getalby.com";
 
     function timeAgo(timestamp) {
         const now = Date.now(); // Current time in milliseconds
@@ -93,7 +90,7 @@
     const fetchTransactions = async () => {
         try {
             const client = new nwc.NWCClient({
-                nostrWalletConnectUrl: DONATION_CONNECTION_SECRET,
+                nostrWalletConnectUrl: NWC_CONNECTION_SECRET,
             });
             const txResponse = await client.listTransactions({});
             const formattedTransactions = txResponse.transactions
