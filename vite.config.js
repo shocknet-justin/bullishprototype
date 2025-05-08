@@ -8,7 +8,13 @@ export default defineConfig({
         emptyOutDir: true,
         rollupOptions: {
             input: {
-                main: 'public/ndk.html'
+                main: resolve(__dirname, 'public/index.html'),
+                ndk: resolve(__dirname, 'public/ndk.html'),
+                nwc: resolve(__dirname, 'public/nwc.html'),
+                nostr: resolve(__dirname, 'public/nostr.html'),
+                bitcoinConnect: resolve(__dirname, 'public/bitcoin-connect.html'),
+                bitcoinQr: resolve(__dirname, 'public/bitcoin-qr.html'),
+                twentyuno: resolve(__dirname, 'public/twentyuno.html')
             }
         }
     },
