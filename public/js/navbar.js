@@ -4,8 +4,7 @@ export const navbarHtml = `
 <nav class="navbar navbar-expand-lg bg-body-tertiary w-100">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html">bullishPrototype <small class="text-muted" style="font-size: 0.6em;">v${pkg.version}</small></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -51,12 +50,20 @@ function setupMobileMenu() {
     
     if (!navbarCollapse || !closeBtn || !navbarToggler) return;
     
+    // Toggle menu when clicking hamburger button
+    navbarToggler.addEventListener('click', () => {
+        if (window.innerWidth < 992) {
+            if (navbarCollapse.classList.contains('show')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        }
+    });
+    
     // Close menu when clicking the close button
     closeBtn.addEventListener('click', () => {
-        const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
-            toggle: false
-        });
-        bsCollapse.hide();
+        closeMobileMenu();
     });
     
     // Close menu when clicking on a nav link (mobile only)
@@ -64,10 +71,7 @@ function setupMobileMenu() {
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             if (window.innerWidth < 992) {
-                const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
-                    toggle: false
-                });
-                bsCollapse.hide();
+                closeMobileMenu();
             }
         });
     });
@@ -78,20 +82,26 @@ function setupMobileMenu() {
             !navbarCollapse.contains(e.target) && 
             !navbarToggler.contains(e.target) &&
             navbarCollapse.classList.contains('show')) {
-            const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
-                toggle: false
-            });
-            bsCollapse.hide();
+            closeMobileMenu();
         }
     });
     
     // Handle window resize
     window.addEventListener('resize', () => {
         if (window.innerWidth >= 992 && navbarCollapse.classList.contains('show')) {
-            const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
-                toggle: false
-            });
-            bsCollapse.hide();
+            closeMobileMenu();
         }
     });
+    
+    function openMobileMenu() {
+        navbarCollapse.classList.add('show');
+        navbarToggler.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+    
+    function closeMobileMenu() {
+        navbarCollapse.classList.remove('show');
+        navbarToggler.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
 } 
