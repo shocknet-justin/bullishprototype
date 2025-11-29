@@ -115,8 +115,6 @@ class LNURLVerifyDemo {
         }
     }
 
-
-
     showPaymentSuccess() {
         document.getElementById('statusText').textContent = 'Payment verified!';
         document.getElementById('paymentResult').classList.remove('d-none');

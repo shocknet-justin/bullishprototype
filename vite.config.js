@@ -15,7 +15,8 @@ export default defineConfig({
                 bitcoinConnect: resolve(__dirname, 'public/bitcoin-connect.html'),
                 bitcoinQr: resolve(__dirname, 'public/bitcoin-qr.html'),
                 twentyuno: resolve(__dirname, 'public/twentyuno.html'),
-                lnurlVerify: resolve(__dirname, 'public/lnurl-verify.html')
+                lnurlVerify: resolve(__dirname, 'public/lnurl-verify.html'),
+                clink: resolve(__dirname, 'public/clink.html')
             }
         }
     },

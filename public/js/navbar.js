@@ -15,6 +15,7 @@ export const navbarHtml = `
           <li class="nav-item"><a class="nav-link" href="lnurl-verify.html">LNURL-verify</a></li>
           <li class="nav-item"><a class="nav-link" href="bitcoin-qr.html">Bitcoin QR</a></li>
           <li class="nav-item"><a class="nav-link" href="ndk.html">NDK</a></li>
+          <li class="nav-item"><a class="nav-link" href="clink.html">CLINK</a></li>
           <!-- <li class="nav-item"><a class="nav-link" href="nwc.html">Nostr Wallet Connect</a></li> -->
         </ul>
       </div>
